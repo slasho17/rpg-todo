@@ -2,11 +2,19 @@ import os
 from pathlib import Path
 import dj_database_url
 
+def csv_env(name, default=""):
+    v = os.environ.get(name, default)
+    return [x.strip() for x in v.split(",") if x.strip()]
+
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-change-me")
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = csv_env("ALLOWED_HOSTS") or ["*"]
+CSRF_TRUSTED_ORIGINS = csv_env("CSRF_TRUSTED_ORIGINS")
+
 
 INSTALLED_APPS = [
     # Django
@@ -76,7 +84,8 @@ DATABASES = {
 
 if os.getenv("DATABASE_URL"):
     DATABASES["default"] = dj_database_url.config(
-        conn_max_age=600, ssl_require=True
+        conn_max_age=600, 
+        ssl_require=os.getenv("DB_SSL_REQUIRE", "0") == "1"
     )
 
 LANGUAGE_CODE = "en-us"
@@ -111,10 +120,3 @@ ACCOUNT_USERNAME_REQUIRED = True
 
 # E-mail em console para dev (se precisar)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-
-ALLOWED_HOSTS = ["*"]  # simples p/ MVP
-CSRF_TRUSTED_ORIGINS = [
-    # adicione seu domínio do Heroku aqui quando souber o nome:
-    # "https://<seu-app>.herokuapp.com"
-]
