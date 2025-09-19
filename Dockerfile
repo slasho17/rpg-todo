@@ -17,5 +17,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Project
 COPY . .
 
-# Default command: run Django dev server (simple for Hello World)
-CMD ["bash","-lc","python manage.py migrate && python manage.py collectstatic --noinput && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"]
+RUN chmod +x /app/start.sh
+CMD ["bash","-lc","/app/start.sh"]
