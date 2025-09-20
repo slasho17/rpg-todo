@@ -113,10 +113,17 @@ LOGIN_REDIRECT_URL = "/"       # para onde ir após login
 LOGOUT_REDIRECT_URL = "/"      # após logout
 
 # Configuração mínima do allauth (dev)
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+
+# pula a página intermediária do provider (vai direto pro Google)
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# signup automático quando voltar do Google (se tiver e-mail)
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 # E-mail em console para dev (se precisar)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
