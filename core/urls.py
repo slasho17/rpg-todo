@@ -3,15 +3,9 @@ from django.http import HttpResponse
 from django.urls import path, include
 
 def hello(request):
-    user = request.user
-    msg = f"Hello, {user.username}! RPG To-Do" if user.is_authenticated else "Hello, RPG To-Do!"
-    return HttpResponse(f"""
-        <html><body>
-            <h1>{msg}</h1>
-            <p><a href='/accounts/login/'>Login</a> | <a href='/accounts/logout/'>Logout</a></p>
-            <p><a href='/admin/'>Admin</a> | <a href='/tasks/ping/'>Tasks Ping</a></p>
-        </body></html>
-    """)
+    from django.conf import settings
+    return HttpResponse(f"SITE_ID={settings.SITE_ID}, USERNAME_REQUIRED={getattr(settings, 'ACCOUNT_USERNAME_REQUIRED', '??')}")
+
 
 urlpatterns = [
     path("", hello, name="hello"),

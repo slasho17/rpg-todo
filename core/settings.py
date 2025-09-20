@@ -115,8 +115,8 @@ LOGOUT_REDIRECT_URL = "/"      # após logout
 # Configuração mínima do allauth (dev)
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 # pula a página intermediária do provider (vai direto pro Google)
